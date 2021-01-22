@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <malloc.h>
+typedef struct node
+{
+ int data;
+ struct node *next;
+}NODE;
+typedef struct node* NODEPTR;
+NODEPTR start, newnode, tptr, shadow;
+void insert_node(int num)
+{
+ newnode=(NODEPTR)malloc(sizeof(NODE));
+ newnode->data=num;
+ newnode->next=NULL;
+ if(start==NULL)
+ start=newnode;
+ else
+ {
+ for(tptr=start; tptr&&
+ tptr->data<newnode->data;
+shadow=tptr, tptr=tptr->next);
+ {
+ if (tptr==start)
+ {
+ newnode->next=start;
+ start=newnode;
+ }
+ else if(tptr==NULL)
+ shadow->next=newnode;
+ else
+ {
+ newnode->next=shadow->next;
+ shadow->next=newnode;
+ }
+ }
+ }
+}
+// This is the solution to be added
+void display_list()
+{
+ for(tptr=start; tptr; tptr=tptr->next)
+ printf("%d ", tptr->data);
+}
+int main()
+{
+ int N, num;
+ scanf("%d",&N);
+ while(N>0)
+ {
+ scanf("%d",&num);
+ insert_node(num);
+ N--;
+ }
+ display_list();
+ return 0;
+}
